@@ -1,0 +1,40 @@
+{
+    "name": "Unity DevContainer",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "args": {
+            "VARIANT": "ubuntu-20.04"  // Specify the base image variant if needed
+        }
+    },
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "editor.formatOnSave": true,  // Automatically format code on save
+        "files.autoSave": "afterDelay",  // Automatically save files after a delay
+        "files.autoSaveDelay": 1000,
+        "editor.tabSize": 4,  // Set default tab size
+        "editor.detectIndentation": false  // Ensure consistent indentation
+    },
+    "extensions": [
+        "ms-vscode.csharp",
+        "unity.unity-debug",
+        "visualstudioexptteam.vscodeintellicode",  // IntelliCode for AI-assisted code completion
+        "eamodio.gitlens",  // GitLens for better Git integration
+        "streetsidesoftware.code-spell-checker",  // Spell checker for code
+        "ms-azuretools.vscode-docker"  // Docker extension for better Docker integration
+    ],
+    "forwardPorts": [
+        8080,  // For local web servers
+        9000,  // For debugging purposes
+        3000,  // For React or other frontend development servers
+        5000,  // For API servers
+        6000   // Additional port for flexibility
+    ],
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ],
+    "remoteUser": "vscode",
+    "postCreateCommand": "dotnet restore",  // Restore NuGet packages if using .NET
+    "postStartCommand": "code .",  // Open the project in VS Code once the container starts
+    "shutdownAction": "stopContainer"  // Stop the container when VS Code shuts down
+}
